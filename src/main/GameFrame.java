@@ -7,8 +7,6 @@ import java.awt.event.WindowFocusListener;
 import javax.swing.JFrame;
 
 public class GameFrame extends JFrame{
-	private static final int WIDTH = 1200;
-	private static final int HEIGHT = 860;
 	
 	public GameFrame(GamePanel gamePanel) {
 		setTitle("Solo Project");

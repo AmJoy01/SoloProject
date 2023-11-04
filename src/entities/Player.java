@@ -27,18 +27,20 @@ public class Player extends Entity{
 	public Player(double x, double y, int width, int height) {
 		super(x, y, width, height);
 		loadAnimations();
+	
 	}
 
 	
 	public void update() {
 		updatePosition();
+		updateHitBox();
 		updateAnimationTick();
 		setAnimation();
 	}
 
 	public void render(Graphics pen) {
 		pen.drawImage(animations[playerAction][aniIndex], (int)x + flipX, (int)y, width*flipW, height, null);
-		
+		drawHitBox(pen);
 	}
 	
 	private void updateAnimationTick() {
