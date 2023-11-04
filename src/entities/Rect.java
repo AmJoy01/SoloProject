@@ -17,7 +17,7 @@ public class Rect {
 	}
 	
 	public void draw(Graphics pen) {
-		pen.setColor(Color.PINK);
+		pen.setColor(Color.GREEN);
 		pen.drawRect((int)x, (int)y, (int)w, (int)h);
 	}
 }

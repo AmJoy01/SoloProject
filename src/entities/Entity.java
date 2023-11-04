@@ -12,21 +12,20 @@ public class Entity{
 		this.y = y; 
 		this.width = width;
 		this.height = height;
-		initHitBox();
 	}
 	
 	protected void drawHitBox(Graphics pen) {
 		hitbox.draw(pen);
 	}
 	
-	protected void initHitBox() {
-		hitbox = new Rect((int)x, (int)y, width, height);
+	protected void initHitBox(double x, double y, double width, double height) {
+		hitbox = new Rect(x, y, width, height);
 	}
 	
-	protected void updateHitBox() {
-		hitbox.x = (int)x;
-		hitbox.y = (int)y;
-	}
+//	protected void updateHitBox() {
+//		hitbox.x = (int)x;
+//		hitbox.y = (int)y;
+//	}
 	
 	public Rect getHitBox() {
 		return hitbox;
