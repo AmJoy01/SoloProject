@@ -12,7 +12,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 public class LoadSave {
-	public static final String PLAYER = "characters/AnimationSheet_Character.png";
+	public static final String PLAYER = "characters/AnimationSheet_Character_revised2.png";
 	public static final String LEVEL = "levels/outside_sprites.png";
 	public static final String LEVEL_ONE_DATA = "data/level_one_data.png";
 	

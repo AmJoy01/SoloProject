@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Rect {
-	double x;
-	double y;
-	double w;
-	double h;
+	public double x;
+	public double y;
+	public double w;
+	public double h;
 	
 	public Rect(double x, double y, double w, double h) {
 		this.x = x;

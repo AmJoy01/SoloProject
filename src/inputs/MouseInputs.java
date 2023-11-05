@@ -2,8 +2,13 @@ package inputs;
 
 import java.awt.event.*;
 
+import main.GamePanel;
 public class MouseInputs implements MouseListener, MouseMotionListener{
 	
+	GamePanel gamePanel;
+	public MouseInputs(GamePanel gamePanel) {
+		this.gamePanel = gamePanel;
+	}
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -12,14 +17,14 @@ public class MouseInputs implements MouseListener, MouseMotionListener{
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-//		System.out.println("mouse moved");
-		
+	
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-//		System.out.println("mouse clicked");
-		
+		if(e.getButton() == MouseEvent.BUTTON1)
+			gamePanel.getGame().getPlayer().setAttacking(true);
+
 	}
 
 	@Override

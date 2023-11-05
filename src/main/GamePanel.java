@@ -13,12 +13,11 @@ import inputs.MouseInputs;
 import static main.Game.GAME_WIDTH;
 import static main.Game.GAME_HEIGHT;
 
-
 public class GamePanel extends JPanel{
 	private MouseInputs mouseInputs;
 	private Game game;
 	public GamePanel(Game game) {
-		mouseInputs = new MouseInputs();
+		mouseInputs = new MouseInputs(this);
 		this.game = game;
 		
 		setPanelSize();
