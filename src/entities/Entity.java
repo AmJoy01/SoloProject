@@ -21,11 +21,7 @@ public class Entity{
 	protected void initHitBox(double x, double y, double width, double height) {
 		hitbox = new Rect(x, y, width, height);
 	}
-	
-//	protected void updateHitBox() {
-//		hitbox.x = (int)x;
-//		hitbox.y = (int)y;
-//	}
+
 	
 	public Rect getHitBox() {
 		return hitbox;

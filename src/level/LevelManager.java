@@ -1,4 +1,4 @@
-package level;
+ package level;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -21,7 +21,7 @@ public class LevelManager {
 		levelOne = new Level(LoadSave.GetLevelData());
 	}
 
-
+//*
 	private void importLevelSprite() {
 		BufferedImage img = LoadSave.GetSprite(LoadSave.LEVEL);
 		levelSprite = new BufferedImage[48];
@@ -34,6 +34,8 @@ public class LevelManager {
 		}
 		
 	}
+//*/	
+
 	
 	public void draw (Graphics pen) {
 		for(int j = 0; j < TILES_HEIGHT; j++) {

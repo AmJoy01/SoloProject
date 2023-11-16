@@ -12,8 +12,8 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 public class LoadSave {
-	public static final String PLAYER = "characters/AnimationSheet_Character_revised2.png";
-	public static final String LEVEL = "levels/outside_sprites.png";
+	public static final String PLAYER = "characters/AnimationSheet_Characters.png";
+	public static final String LEVEL = "levels/dungeon_tileset.png";
 	public static final String LEVEL_ONE_DATA = "data/level_one_data.png";
 	
 	
@@ -40,20 +40,20 @@ public class LoadSave {
 	
 	public static int[][] GetLevelData(){
 		
-int[][] lvlData = new int[TILES_HEIGHT][TILES_WIDTH];
-BufferedImage img = GetSprite(LEVEL_ONE_DATA);
+		int[][] lvlData = new int[TILES_HEIGHT][TILES_WIDTH];
+		BufferedImage img = GetSprite(LEVEL_ONE_DATA);
 
-for(int j = 0; j < img.getHeight(); j++) {
-	for(int i = 0; i < img.getWidth(); i++) {
-		Color color = new Color(img.getRGB(i, j));
-		int value = color.getRed();
-		if(value >= 48) {
-			value = 0;
+		for(int j = 0; j < img.getHeight(); j++) {
+			for(int i = 0; i < img.getWidth(); i++) {
+				Color color = new Color(img.getRGB(i, j));
+				int value = color.getRed();
+				if(value >= 48) {
+					value = 0;
+				}
+				lvlData[j][i] = value;
+			}
 		}
-		lvlData[j][i] = value;
-	}
-}
-return lvlData;
+		return lvlData;
 		
 	}
 	

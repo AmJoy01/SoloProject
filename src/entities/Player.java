@@ -69,17 +69,18 @@ public class Player extends Entity{
 	
 	private void setAnimation() {
 		int startAnimation = playerAction;
-		if(isMoving) {
-			playerAction = WALKING;
-		}else {
-			playerAction = IDLE;
+		
+		if(isMoving) 						playerAction = WALKING;
+		
+		else								playerAction = IDLE;
+		
+		if(isAttacking)						playerAction = ATTACKING;
+		
+		if(isInAir) {
+			if(airSpeed < 0 )   			playerAction = JUMP;
+			else 							playerAction = FALLING;
 		}
-		if(isAttacking) {
-			playerAction = ATTACKING;
-		}
-		if(startAnimation != playerAction) {
-			resetAniTick();
-		}
+		if(startAnimation != playerAction) 	resetAniTick();
 		
 	}
 	
@@ -154,7 +155,7 @@ public class Player extends Entity{
 		
 		BufferedImage img = LoadSave.GetSprite(LoadSave.PLAYER);
 			
-			animations = new BufferedImage[10][8];
+			animations = new BufferedImage[7][8];
 			for(int row = 0; row < animations.length; row++) {
 				for(int col = 0; col < animations[row].length; col++) {
 					animations[row][col] = img.getSubimage(col*32, row*32, 32, 32);
