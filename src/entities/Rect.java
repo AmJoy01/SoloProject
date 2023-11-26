@@ -16,6 +16,13 @@ public class Rect {
 		this.h = h;
 	}
 	
+	public boolean contains(int mx, int my) {
+		return (mx >= x  )   && 
+				   (mx <= x+w)   && 			   
+				   (my >= y  )   && 
+				   (my <= y+h);
+	}
+	
 	public void draw(Graphics pen) {
 		pen.setColor(Color.GREEN);
 		pen.drawRect((int)x, (int)y, (int)w, (int)h);

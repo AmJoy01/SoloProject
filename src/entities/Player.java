@@ -23,7 +23,7 @@ public class Player extends Entity{
 	private boolean isMoving = false;
 	private boolean isAttacking = false;
 	private boolean up, down, left, right, jump;
-	private double playerSpeed = 2.0;
+	private double playerSpeed = 1.0 * Game.SCALE;
 	private int[][]lvlData;
 	private int flipW = 1; // the width of the character
 	private int flipX = 0; // the position of the character
@@ -39,7 +39,7 @@ public class Player extends Entity{
 	public Player(double x, double y, int width, int height) {
 		super(x, y, width, height);
 		loadAnimations();
-		initHitBox(x, y, 10*Game.SCALE, 27*Game.SCALE);
+		initHitBox(x, y, (int)(10*Game.SCALE), (int)(27*Game.SCALE));
 	}
 
 	
@@ -51,7 +51,6 @@ public class Player extends Entity{
 
 	public void render(Graphics pen) {
 		pen.drawImage(animations[playerAction][aniIndex], (int)((hitbox.x - xDrawOffset) + flipX), (int)(hitbox.y - yDrawOffset), width*flipW, height, null);
-		//drawHitBox(pen);
 	}
 	
 	private void updateAnimationTick() {

@@ -18,7 +18,7 @@ public class Entity{
 		hitbox.draw(pen);
 	}
 	
-	protected void initHitBox(double x, double y, double width, double height) {
+	protected void initHitBox(double x, double y, int width, int height) {
 		hitbox = new Rect(x, y, width, height);
 	}
 

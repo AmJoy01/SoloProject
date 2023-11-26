@@ -56,6 +56,8 @@ public class Game implements Runnable{
 			//If the game is in Playing Mode, update player and level (so play game)
 			playing.update();
 			break;
+		case OPTIONS:
+		case QUIT:
 		default:
 			System.exit(0);
 			break;

@@ -7,12 +7,14 @@ import java.awt.event.MouseEvent;
 import entities.Player;
 import level.LevelManager;
 import main.Game;
+import ui.PauseOverlay;
 
 public class Playing extends State implements StateMethods{
 	
 	private Player player;
 	private LevelManager levelManager;
-	
+	private PauseOverlay pauseOverlay;
+	private boolean paused = false; //show the pause screen or not
 	
 	private final int UP_KEY = KeyEvent.VK_W;
 	private final int LT_KEY = KeyEvent.VK_A;
@@ -28,18 +30,21 @@ public class Playing extends State implements StateMethods{
 		levelManager = new LevelManager(game);
 		player = new Player(200, 200, (int)(32*Game.SCALE), (int)(32*Game.SCALE));
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
+		pauseOverlay = new PauseOverlay();
 	}
 	
 	@Override
 	public void update() {
 		levelManager.update();
 		player.update();
+		pauseOverlay.update();
 	}
 
 	@Override
 	public void draw(Graphics pen) {
 		levelManager.draw(pen);
 		player.render(pen);
+		pauseOverlay.draw(pen);
 	}
 
 	@Override
