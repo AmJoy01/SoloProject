@@ -71,11 +71,9 @@ public class Player extends Entity{
 		int startAnimation = playerAction;
 		
 		if(isMoving) 	{
-			if(isRunning) {
-				playerAction = RUNNING;
-			}else {				
-				playerAction = WALKING;
-			}
+			if(isRunning) 	playerAction = RUNNING;
+			else 			playerAction = WALKING;
+			
 		}
 		
 		else								playerAction = IDLE;
@@ -191,7 +189,7 @@ public class Player extends Entity{
 	public void setAttacking(boolean isAttacking) {
 		this.isAttacking = isAttacking;
 	}
-//
+
 //	public boolean isUp() {
 //		return up;
 //	}

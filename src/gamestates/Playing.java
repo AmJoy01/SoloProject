@@ -17,8 +17,15 @@ public class Playing extends State implements StateMethods{
 	private boolean paused = false; //show the pause screen or not
 	
 	private final int UP_KEY = KeyEvent.VK_W;
+	
+	
 	private final int LT_KEY = KeyEvent.VK_A;
+	private final int LT_ARROW_KEY = KeyEvent.VK_LEFT;
+	
 	private final int RT_KEY = KeyEvent.VK_D;
+	private final int RT_ARROW_KEY = KeyEvent.VK_RIGHT;
+	
+	
 	private final int JP_KEY = KeyEvent.VK_SPACE;
 	private final int SHIFT_KEY = KeyEvent.VK_SHIFT;
 	private final int ESC_KEY = KeyEvent.VK_ESCAPE;
@@ -86,12 +93,14 @@ public class Playing extends State implements StateMethods{
 	public void keyPressed(KeyEvent e) {
 		
 		switch (e.getKeyCode()) {
-		case LT_KEY: 	player.setLeft(true); 			break;
-		case RT_KEY: 	player.setRight(true);  		break;
+		case LT_KEY: 	
+		case LT_ARROW_KEY:	player.setLeft(true); 	 break;
+		case RT_KEY: 	
+		case RT_ARROW_KEY: player.setRight(true);  	 break;
 		case UP_KEY:
-		case JP_KEY: 	player.setJump(true); 			break;
-		case SHIFT_KEY: 	player.setRunning(true); 	break;
-		case ESC_KEY: 	paused = !paused;				break;
+		case JP_KEY: 	player.setJump(true); 		 break;
+		case SHIFT_KEY: 	player.setRunning(true); break;
+		case ESC_KEY: 	paused = !paused;			 break;
 		}
 		
 	}
@@ -99,11 +108,13 @@ public class Playing extends State implements StateMethods{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case LT_KEY: player.setLeft(false);  		break;
-		case RT_KEY: player.setRight(false); 		break;
+		case LT_KEY: 	
+		case LT_ARROW_KEY:	player.setLeft(false); 	 break;
+		case RT_KEY: 	
+		case RT_ARROW_KEY: player.setRight(false);   break;
 		case UP_KEY:
-		case JP_KEY: player.setJump(false); 		break;
-		case SHIFT_KEY: player.setRunning(false); 	break;
+		case JP_KEY: player.setJump(false); 		 break;
+		case SHIFT_KEY: player.setRunning(false); 	 break;
 		}
 		
 	}
