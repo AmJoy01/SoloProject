@@ -20,6 +20,8 @@ public class Playing extends State implements StateMethods{
 	private final int LT_KEY = KeyEvent.VK_A;
 	private final int RT_KEY = KeyEvent.VK_D;
 	private final int JP_KEY = KeyEvent.VK_SPACE;
+	private final int SHIFT_KEY = KeyEvent.VK_SHIFT;
+	private final int ESC_KEY = KeyEvent.VK_ESCAPE;
 	
 	public Playing(Game game) {
 		super(game);
@@ -30,54 +32,66 @@ public class Playing extends State implements StateMethods{
 		levelManager = new LevelManager(game);
 		player = new Player(200, 200, (int)(32*Game.SCALE), (int)(32*Game.SCALE));
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
-		pauseOverlay = new PauseOverlay();
+		pauseOverlay = new PauseOverlay(this);
 	}
 	
 	@Override
 	public void update() {
-		levelManager.update();
-		player.update();
-		pauseOverlay.update();
+		
+		if(paused) {			
+			pauseOverlay.update();
+		}
+		else{
+			levelManager.update();
+			player.update();
+		}
 	}
 
 	@Override
 	public void draw(Graphics pen) {
 		levelManager.draw(pen);
 		player.render(pen);
-		pauseOverlay.draw(pen);
+		if(paused)	pauseOverlay.draw(pen);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON1)		player.setAttacking(true);
+		if(e.getButton() == MouseEvent.BUTTON1)
+			player.setAttacking(true);
+		
 	}
-
+	
+	public void mouseDragged(MouseEvent e) {
+		if(paused)		pauseOverlay.mouseDragged(e);
+	}
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(paused)		pauseOverlay.mousePressed(e);
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if(paused)		pauseOverlay.mouseReleased(e);
 		
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(paused)		pauseOverlay.mouseMoved(e);
 	}
+
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
 		switch (e.getKeyCode()) {
-		case LT_KEY: player.setLeft(true); 	break;
-		case RT_KEY: player.setRight(true); break;
+		case LT_KEY: 	player.setLeft(true); 			break;
+		case RT_KEY: 	player.setRight(true);  		break;
 		case UP_KEY:
-		case JP_KEY: player.setJump(true); 	break;
-		case KeyEvent.VK_BACK_SPACE: Gamestate.state = Gamestate.MENU;
+		case JP_KEY: 	player.setJump(true); 			break;
+		case SHIFT_KEY: 	player.setRunning(true); 	break;
+		case ESC_KEY: 	paused = !paused;				break;
 		}
 		
 	}
@@ -85,14 +99,19 @@ public class Playing extends State implements StateMethods{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case LT_KEY: player.setLeft(false);  	break;
-		case RT_KEY: player.setRight(false); 	break;
+		case LT_KEY: player.setLeft(false);  		break;
+		case RT_KEY: player.setRight(false); 		break;
 		case UP_KEY:
-		case JP_KEY: player.setJump(false); 	break;
+		case JP_KEY: player.setJump(false); 		break;
+		case SHIFT_KEY: player.setRunning(false); 	break;
 		}
 		
 	}
 
+	public void unpauseGame() {
+		paused = false;
+	}
+	
 	public void windowFocusLost() {
 		player.resetDirBooleans();
 	}

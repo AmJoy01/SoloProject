@@ -18,6 +18,9 @@ public class LoadSave {
 	public static final String MENU_BACKGROUND = "menu/menu_background.png";
 	public static final String MENU_BUTTONS = "menu/button_atlas.png";
 	public static final String PAUSE_MENU = "menu/pause_menu.png";
+	public static final String SOUND_BUTTONS = "menu/sound_button.png";
+	public static final String URM_BUTTONS = "menu/urm_buttons.png"; // Unpause, Replay Level, Menu
+	public static final String VOLUME_BUTTONS = "menu/volume_buttons.png"; 
 	
 	public static BufferedImage GetSprite(String fileName) {
 		BufferedImage img = null;

@@ -22,8 +22,9 @@ public class Player extends Entity{
 	private int playerAction = IDLE;
 	private boolean isMoving = false;
 	private boolean isAttacking = false;
+	private boolean isRunning = false;
 	private boolean up, down, left, right, jump;
-	private double playerSpeed = 1.0 * Game.SCALE;
+	private double playerSpeed = 0.5 * Game.SCALE;
 	private int[][]lvlData;
 	private int flipW = 1; // the width of the character
 	private int flipX = 0; // the position of the character
@@ -69,7 +70,13 @@ public class Player extends Entity{
 	private void setAnimation() {
 		int startAnimation = playerAction;
 		
-		if(isMoving) 						playerAction = WALKING;
+		if(isMoving) 	{
+			if(isRunning) {
+				playerAction = RUNNING;
+			}else {				
+				playerAction = WALKING;
+			}
+		}
 		
 		else								playerAction = IDLE;
 		
@@ -97,11 +104,13 @@ public class Player extends Entity{
 		double xSpeed = 0;  
 		
 		if(left) {
+			if(isRunning)	xSpeed -= playerSpeed *1.0;
 			xSpeed -= playerSpeed;
 			flipW = -1; // flips to the left
 			flipX = width; // placed within its width (x+width)
 		}
 		if(right) {
+			if(isRunning)	xSpeed += playerSpeed *1.0;
 			xSpeed += playerSpeed;
 			flipW = 1; // flips to the right
 			flipX = 0; // placed within its width (x)
@@ -130,7 +139,7 @@ public class Player extends Entity{
 		isMoving = true;
 		
 	}
-
+	
 	private void jump() {
 		if(isInAir)		return;
 		isInAir = true;
@@ -175,28 +184,32 @@ public class Player extends Entity{
 		down = false;
 	}
 	
+	public void setRunning(boolean isRunning) {
+		this.isRunning = isRunning;
+	}
+	
 	public void setAttacking(boolean isAttacking) {
 		this.isAttacking = isAttacking;
 	}
-
-	public boolean isUp() {
-		return up;
-	}
-
-
-	public void setUp(boolean up) {
-		this.up = up;
-	}
-
-
-	public boolean isDown() {
-		return down;
-	}
+//
+//	public boolean isUp() {
+//		return up;
+//	}
+//
+//
+//	public void setUp(boolean up) {
+//		this.up = up;
+//	}
 
 
-	public void setDown(boolean down) {
-		this.down = down;
-	}
+//	public boolean isDown() {
+//		return down;
+//	}
+//
+//
+//	public void setDown(boolean down) {
+//		this.down = down;
+//	}
 
 
 	public boolean isLeft() {
