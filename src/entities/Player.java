@@ -50,8 +50,8 @@ public class Player extends Entity{
 		setAnimation();
 	}
 
-	public void render(Graphics pen) {
-		pen.drawImage(animations[playerAction][aniIndex], (int)((hitbox.x - xDrawOffset) + flipX), (int)(hitbox.y - yDrawOffset), width*flipW, height, null);
+	public void render(Graphics pen, int lvlOffset) {
+		pen.drawImage(animations[playerAction][aniIndex], (int)((hitbox.x - xDrawOffset) + flipX)- lvlOffset, (int)(hitbox.y - yDrawOffset), width*flipW, height, null);
 	}
 	
 	private void updateAnimationTick() {
@@ -189,26 +189,6 @@ public class Player extends Entity{
 	public void setAttacking(boolean isAttacking) {
 		this.isAttacking = isAttacking;
 	}
-
-//	public boolean isUp() {
-//		return up;
-//	}
-//
-//
-//	public void setUp(boolean up) {
-//		this.up = up;
-//	}
-
-
-//	public boolean isDown() {
-//		return down;
-//	}
-//
-//
-//	public void setDown(boolean down) {
-//		this.down = down;
-//	}
-
 
 	public boolean isLeft() {
 		return left;

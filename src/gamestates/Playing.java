@@ -1,5 +1,6 @@
 package gamestates;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -8,6 +9,7 @@ import entities.Player;
 import level.LevelManager;
 import main.Game;
 import ui.PauseOverlay;
+import utilz.LoadSave;
 
 public class Playing extends State implements StateMethods{
 	
@@ -16,6 +18,15 @@ public class Playing extends State implements StateMethods{
 	private PauseOverlay pauseOverlay;
 	private boolean paused = false; //show the pause screen or not
 	
+	
+	/*******CAMERA*******/
+	private int xLvlOffset;
+	private int leftBorder = (int) (0.2 * Game.GAME_WIDTH); // 20%
+	private int rightBorder = (int) (0.8 * Game.GAME_WIDTH); // 80%
+	private int lvlTilesWide = LoadSave.GetLevelData()[0].length;
+	private int maxTilesOffset = lvlTilesWide - Game.TILES_WIDTH;
+	private int maxLvlOffsetX = maxTilesOffset * Game.TILES_SIZE;
+	/*********INPUT KEYS************/
 	private final int UP_KEY = KeyEvent.VK_W;
 	
 	
@@ -51,14 +62,30 @@ public class Playing extends State implements StateMethods{
 		else{
 			levelManager.update();
 			player.update();
+			checkCloseToBorder();
 		}
+	}
+
+	private void checkCloseToBorder() {
+		int playerX = (int) player.getHitBox().x;
+		int diff = playerX - xLvlOffset;
+		
+		if(diff > rightBorder)	xLvlOffset += diff - rightBorder;
+		else if(diff < leftBorder)	xLvlOffset += diff - leftBorder;
+		
+		if(xLvlOffset > maxLvlOffsetX) xLvlOffset = maxLvlOffsetX;
+		else if(xLvlOffset < 0)	xLvlOffset = 0;
 	}
 
 	@Override
 	public void draw(Graphics pen) {
-		levelManager.draw(pen);
-		player.render(pen);
-		if(paused)	pauseOverlay.draw(pen);
+		levelManager.draw(pen, xLvlOffset);
+		player.render(pen, xLvlOffset);
+		if(paused)	{
+			pen.setColor(new Color(0,0,0,150));
+			pen.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
+			pauseOverlay.draw(pen);
+		}
 	}
 
 	@Override
@@ -96,11 +123,11 @@ public class Playing extends State implements StateMethods{
 		case LT_KEY: 	
 		case LT_ARROW_KEY:	player.setLeft(true); 	 break;
 		case RT_KEY: 	
-		case RT_ARROW_KEY: player.setRight(true);  	 break;
+		case RT_ARROW_KEY: 	player.setRight(true);   break;
 		case UP_KEY:
-		case JP_KEY: 	player.setJump(true); 		 break;
+		case JP_KEY: 		player.setJump(true); 	 break;
 		case SHIFT_KEY: 	player.setRunning(true); break;
-		case ESC_KEY: 	paused = !paused;			 break;
+		case ESC_KEY: 		paused = !paused;		 break;
 		}
 		
 	}
@@ -109,12 +136,12 @@ public class Playing extends State implements StateMethods{
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case LT_KEY: 	
-		case LT_ARROW_KEY:	player.setLeft(false); 	 break;
+		case LT_ARROW_KEY: player.setLeft(false); player.setRunning(false);  break;
 		case RT_KEY: 	
-		case RT_ARROW_KEY: player.setRight(false);   break;
+		case RT_ARROW_KEY: player.setRight(false); player.setRunning(false); break;
 		case UP_KEY:
-		case JP_KEY: player.setJump(false); 		 break;
-		case SHIFT_KEY: player.setRunning(false); 	 break;
+		case JP_KEY: 	   player.setJump(false); 	 break;
+//		case SHIFT_KEY:	   player.setRunning(false); break;
 		}
 		
 	}

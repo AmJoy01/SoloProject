@@ -1,7 +1,7 @@
 package ui;
 
 import static utilz.Constants.UI.PauseButtons.SOUND_SIZE;
-import static utilz.Constants.UI.URMButtons.URM_SIZE;
+import static utilz.Constants.UI.URMButtons.*;
 import static utilz.Constants.UI.VolumeButtons.*;
 
 import java.awt.Graphics;
@@ -41,13 +41,13 @@ public class PauseOverlay {
 
 	private void createUrmButtons() {
 		int menuX = (int) (313 * Game.SCALE);
-		int replayX = (int) (387 * Game.SCALE);
-		int unpauseX = (int) (462 * Game.SCALE);
-		int buttonY = (int) (325 * Game.SCALE);
+		int buttonY = (int) (300 * Game.SCALE);
+		int replayY = (int) (230 * Game.SCALE);
+		int unpauseY = (int) (160 * Game.SCALE);
 		
-		menuBtn = new UrmButton(menuX, buttonY, URM_SIZE, URM_SIZE, 2);
-		replayBtn = new UrmButton(replayX, buttonY, URM_SIZE, URM_SIZE, 1);
-		unpauseBtn = new UrmButton(unpauseX, buttonY, URM_SIZE, URM_SIZE, 0);
+		menuBtn = new UrmButton(menuX, buttonY, URM_WIDTH * 4, URM_HEIGHT* 4, 2);
+		replayBtn = new UrmButton(menuX, replayY, URM_WIDTH * 4, URM_HEIGHT* 4, 1);
+		unpauseBtn = new UrmButton(menuX, unpauseY, URM_WIDTH * 4, URM_HEIGHT* 4, 0);
 	}
 
 	private void createSoundButtons() {
@@ -60,22 +60,22 @@ public class PauseOverlay {
 
 	private void loadBackground() {
 		backgroundImg = LoadSave.GetSprite(LoadSave.PAUSE_MENU);
-		bgW = (int)(backgroundImg.getWidth() * Game.SCALE);
-		bgH = (int)(backgroundImg.getHeight() * Game.SCALE);
+		bgW = (int)(backgroundImg.getWidth() * Game.SCALE * 4);
+		bgH = (int)(backgroundImg.getHeight() * Game.SCALE * 4);
 		bgX = Game.GAME_WIDTH/2 - bgW / 2;
 		bgY = (int) (25 * Game.SCALE);
 		
 	}
 
 	public void update() {
-		musicButton.update();
-		sfxButton.update();
+//		musicButton.update();
+//		sfxButton.update();
 		
 		menuBtn.update();
 		replayBtn.update();
 		unpauseBtn.update();
 		
-		volumeButton.update();
+//		volumeButton.update();
 	}
 	
 	public void draw(Graphics pen) {
@@ -83,8 +83,8 @@ public class PauseOverlay {
 		pen.drawImage(backgroundImg, bgX, bgY, bgW, bgH, null);
 		
 		/*SOUND BUTTONS*/
-		musicButton.draw(pen);
-		sfxButton.draw(pen);
+//		musicButton.draw(pen);
+//		sfxButton.draw(pen);
 		
 		/*MENU, REPLAY LEVEL, UNPAUSE BUTTONS*/
 		menuBtn.draw(pen);
@@ -92,7 +92,7 @@ public class PauseOverlay {
 		unpauseBtn.draw(pen);
 		
 		/*VOLUME BUTTON*/
-		volumeButton.draw(pen);
+//		volumeButton.draw(pen);
 	}
 	
 	public void mouseDragged(MouseEvent e) {

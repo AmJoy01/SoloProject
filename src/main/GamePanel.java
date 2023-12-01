@@ -1,4 +1,4 @@
-// Sprite image character by penzilla.itch.io/hooded-protagonist
+
 
 package main;
 

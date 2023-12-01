@@ -24,7 +24,8 @@ public class CollisionMethods extends Rect{
 	}
 	
 	private static boolean isSolid(double x, double y, int[][]lvlData) {
-		if(x < 0 || x >= Game.GAME_WIDTH) return true;
+		int maxWidth = lvlData[0].length * Game.TILES_SIZE;
+		if(x < 0 || x >= maxWidth) return true;
 		if(y < 0 || y >= Game.GAME_HEIGHT) return true;
 		
 		double xIndex = x/Game.TILES_SIZE;

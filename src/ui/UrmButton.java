@@ -23,7 +23,7 @@ public class UrmButton extends PauseButton{
 		BufferedImage temp = LoadSave.GetSprite(LoadSave.URM_BUTTONS);
 		urmImgs = new BufferedImage[3];
 		for(int i = 0; i < urmImgs.length; i++) {
-			urmImgs[i] = temp.getSubimage(i*URM_DEFAULT_SIZE, rowIndex*URM_DEFAULT_SIZE, URM_DEFAULT_SIZE, URM_DEFAULT_SIZE);
+			urmImgs[i] = temp.getSubimage(i*URM_WIDTH_DEFAULT, rowIndex*URM_HEIGHT_DEFAULT, URM_WIDTH_DEFAULT, URM_HEIGHT_DEFAULT);
 		}
 	}
 
@@ -34,7 +34,7 @@ public class UrmButton extends PauseButton{
 	}
 	
 	public void draw(Graphics pen) {
-		pen.drawImage(urmImgs[index], x, y, URM_SIZE, URM_SIZE, null);
+		pen.drawImage(urmImgs[index], x, y, URM_WIDTH * 4, URM_HEIGHT * 4, null);
 	}
 	
 	public void resetBools()

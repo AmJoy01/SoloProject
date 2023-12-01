@@ -37,11 +37,11 @@ public class LevelManager {
 //*/	
 
 	
-	public void draw (Graphics pen) {
+	public void draw (Graphics pen, int lvlOffset) {
 		for(int j = 0; j < TILES_HEIGHT; j++) {
-			for(int i = 0; i < TILES_WIDTH; i++) {	
+			for(int i = 0; i < levelOne.getLevelData()[0].length; i++) {	
 				int index = levelOne.getSpriteIndex(i, j);
-				pen.drawImage(levelSprite[index], TILES_SIZE*i, TILES_SIZE *j ,TILES_SIZE, TILES_SIZE, null);
+				pen.drawImage(levelSprite[index], TILES_SIZE*i - lvlOffset, TILES_SIZE *j ,TILES_SIZE, TILES_SIZE, null);
 			}
 		}
 	}
