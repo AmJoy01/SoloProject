@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 import entities.Player;
 import level.LevelManager;
@@ -18,14 +19,18 @@ public class Playing extends State implements StateMethods{
 	private PauseOverlay pauseOverlay;
 	private boolean paused = false; //show the pause screen or not
 	
-	
+	/*********IMAGES**********/
+	private BufferedImage backgroundImg, moonImg, bigClouds, darkClouds;
+
 	/*******CAMERA*******/
 	private int xLvlOffset;
-	private int leftBorder = (int) (0.2 * Game.GAME_WIDTH); // 20%
-	private int rightBorder = (int) (0.8 * Game.GAME_WIDTH); // 80%
+	private int leftBorder = (int) (0.3 * Game.GAME_WIDTH); // 20%
+	private int rightBorder = (int) (0.7 * Game.GAME_WIDTH); // 80%
 	private int lvlTilesWide = LoadSave.GetLevelData()[0].length;
 	private int maxTilesOffset = lvlTilesWide - Game.TILES_WIDTH;
 	private int maxLvlOffsetX = maxTilesOffset * Game.TILES_SIZE;
+	
+	
 	/*********INPUT KEYS************/
 	private final int UP_KEY = KeyEvent.VK_W;
 	
@@ -44,6 +49,12 @@ public class Playing extends State implements StateMethods{
 	public Playing(Game game) {
 		super(game);
 		init();
+		
+		/*Images for Background*/
+		backgroundImg = LoadSave.GetSprite(LoadSave.PLAYING_BACKGROUND_IMG);
+		moonImg = LoadSave.GetSprite(LoadSave.MOON_IMG);
+		bigClouds = LoadSave.GetSprite(LoadSave.BIG_CLOUDS);
+		darkClouds = LoadSave.GetSprite(LoadSave.BIG_DARK_CLOUDS);
 	}
 	
 	public void init() {
@@ -66,6 +77,8 @@ public class Playing extends State implements StateMethods{
 		}
 	}
 
+	
+	
 	private void checkCloseToBorder() {
 		int playerX = (int) player.getHitBox().x;
 		int diff = playerX - xLvlOffset;
@@ -79,6 +92,11 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void draw(Graphics pen) {
+		/*Draw background*/
+		pen.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_WIDTH, null);
+		pen.drawImage(moonImg, Game.GAME_WIDTH/2, 200, moonImg.getWidth(), moonImg.getHeight(), null);
+		
+		drawClouds(pen);
 		levelManager.draw(pen, xLvlOffset);
 		player.render(pen, xLvlOffset);
 		if(paused)	{
@@ -88,6 +106,14 @@ public class Playing extends State implements StateMethods{
 		}
 	}
 
+	private void drawClouds(Graphics pen) {
+		for(int i = 0; i < 3; i++) 
+			pen.drawImage(bigClouds, i * (int)(bigClouds.getWidth()*Game.SCALE) - (int) (xLvlOffset * 0.4), (int)(50 * Game.SCALE), (int)(bigClouds.getWidth()*Game.SCALE),(int)(bigClouds.getHeight()* Game.SCALE), null);
+		
+		for(int i = 0; i < 5; i++)
+			pen.drawImage(darkClouds, i * (int)(darkClouds.getWidth()*Game.SCALE) - (int) (xLvlOffset * 0.6), (int)(100 * Game.SCALE), (int)(darkClouds.getWidth()*Game.SCALE),(int)(darkClouds.getHeight()* Game.SCALE), null);			
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1)

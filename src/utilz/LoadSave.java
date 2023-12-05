@@ -1,11 +1,9 @@
 package utilz;
 
-import static main.Game.TILES_HEIGHT;
-import static main.Game.TILES_WIDTH;
+import static main.Game.*;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-
 import java.io.InputStream;
 
 
@@ -23,6 +21,11 @@ public class LoadSave {
 	public static final String URM_BUTTONS = "menu/pause_menu_buttons.png"; // Unpause, Replay Level, Menu
 	public static final String VOLUME_BUTTONS = "menu/volume_buttons.png"; 
 	public static final String BACKGROUND_MENU = "levels/1.png";
+	public static final String PLAYING_BACKGROUND_IMG = "levels/1.png";
+	public static final String MOON_IMG = "levels/2.png";
+	public static final String BIG_CLOUDS = "levels/3.png";
+	public static final String BIG_DARK_CLOUDS = "levels/4.png";
+	
 	public static BufferedImage GetSprite(String fileName) {
 		BufferedImage img = null;
 		InputStream is = LoadSave.class.getResourceAsStream("/" + fileName);
