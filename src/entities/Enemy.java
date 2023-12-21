@@ -35,21 +35,30 @@ public abstract class Enemy extends Entity{
 		firstUpdate = false;
 	}
 	
-	private void updateAnimationTick() {
+	protected void updateAnimationTick() {
 		aniTick++;
 		if (aniTick >= aniSpeed) {
 			aniTick = 0;
 			aniIndex++;
 			if (aniIndex >= GetSpriteAmount(enemyType, enemyState)) {
 				aniIndex = 0;
-				
-				switch(enemyState) {
-				case ATTACK: enemyState = IDLE; break;
-				case DEAD: active = false; break;
-				
-				}
 			}
 		}
 	}
 
+	public void update() {
+		updateAnimationTick();
+	}
+	
+	public int getAniIndex() {
+		return aniIndex;
+	}
+	
+	public int getEnemyState() {
+		return enemyState;
+	}
+	
+	public boolean isActive() {
+		return active;
+	}
 }

@@ -1,13 +1,16 @@
 package utilz;
 
-import static main.Game.*;
-
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
-
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+
+import entities.Slime;
+import main.Game;
+
+import static utilz.Constants.EnemyConstants.SLIME;
 
 public class LoadSave {
 	public static final String PLAYER = "characters/AnimationSheet_Characters.png";
@@ -45,7 +48,21 @@ public class LoadSave {
 		return img;
 	}
 	
-	
+	public static ArrayList<Slime> GetSlimes(){
+		BufferedImage img = GetSprite(LEVEL_ONE_DATA);
+		ArrayList<Slime> list = new ArrayList<>();
+		
+		for(int j = 0; j < img.getHeight(); j++) {
+			for(int i = 0; i < img.getWidth(); i++) {
+				Color color = new Color(img.getRGB(i, j));
+				int value = color.getGreen();
+				if(value == SLIME) {
+					list.add(new Slime(i* Game.TILES_SIZE, j * Game.TILES_SIZE));
+				}
+			}
+		} 
+		return list;
+	}
 	
 	public static int[][] GetLevelData(){
 		

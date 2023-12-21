@@ -16,8 +16,8 @@ import utilz.LoadSave;
 public class Playing extends State implements StateMethods{
 	
 	private Player player;
-	private EnemyManager enemyManager;
 	private LevelManager levelManager;
+	private EnemyManager enemyManager;
 	private PauseOverlay pauseOverlay;
 	private boolean paused = false; //show the pause screen or not
 	
@@ -75,6 +75,7 @@ public class Playing extends State implements StateMethods{
 		else{
 			levelManager.update();
 			player.update();
+			enemyManager.update();
 			checkCloseToBorder();
 		}
 	}
@@ -100,6 +101,7 @@ public class Playing extends State implements StateMethods{
 		drawClouds(pen);
 		levelManager.draw(pen, xLvlOffset);
 		player.render(pen, xLvlOffset);
+		enemyManager.draw(pen, xLvlOffset);
 		
 		if(paused)	{
 			pen.setColor(new Color(0,0,0,150));

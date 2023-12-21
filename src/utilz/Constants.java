@@ -19,17 +19,17 @@ public class Constants {
 		
 		//MIGHT NEED TO DRAW THE OFFSET OF X AND Y
 		public static final int SLIME_DRAWOFFSET_X = (int)(26 * Game.SCALE); // start at the end of the camera
-		public static final int SLIME_DRAWOFFSET_Y = (int)(9 * Game.SCALE); // start above the platform
+		public static final int SLIME_DRAWOFFSET_Y = (int)(1 * Game.SCALE); // start above the platform
 		
 		
 		public static int GetSpriteAmount(int enemyType, int enemyState) {
 			switch(enemyType) {
 			case SLIME:
 				switch(enemyState) {
-				case DEAD: 
-				case ATTACK:
-				case IDLE: return 5;
-				case RUNNING: return 7;	
+				case DEAD: return 5;
+				case ATTACK: return 5;
+				case IDLE: return 5; 
+				case RUNNING: return 7;
 				}
 			}
 			return 0;
