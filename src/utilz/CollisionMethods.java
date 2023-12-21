@@ -10,12 +10,12 @@ public class CollisionMethods extends Rect{
 		super(x, y, w, h);
 	}
 
-	public static boolean canMoveHere(double x, double y, double width, double height, int[][]lvlData) {
-		if(!isSolid(x,y,lvlData) 				&&
-		   !isSolid(x+width, y+height, lvlData) &&
-		   !isSolid(x+width, y+height, lvlData) &&
-		   !isSolid(x+width, y, lvlData)		&& 
-		   !isSolid(x, y+height, lvlData))
+	public static boolean CanMoveHere(double x, double y, double width, double height, int[][]lvlData) {
+		if(!IsSolid(x,y,lvlData) 				&&
+		   !IsSolid(x+width, y+height, lvlData) &&
+		   !IsSolid(x+width, y+height, lvlData) &&
+		   !IsSolid(x+width, y, lvlData)		&& 
+		   !IsSolid(x, y+height, lvlData))
 		{		
 		   return true;
 		}
@@ -23,7 +23,7 @@ public class CollisionMethods extends Rect{
 				return false;
 	}
 	
-	private static boolean isSolid(double x, double y, int[][]lvlData) {
+	private static boolean IsSolid(double x, double y, int[][]lvlData) {
 		int maxWidth = lvlData[0].length * Game.TILES_SIZE;
 		if(x < 0 || x >= maxWidth) return true;
 		if(y < 0 || y >= Game.GAME_HEIGHT) return true;
@@ -39,7 +39,7 @@ public class CollisionMethods extends Rect{
 		return false;
 	}
 	
-	public static double getEntityXPosNextToWall(Rect hitbox, double xSpeed) {
+	public static double GetEntityXPosNextToWall(Rect hitbox, double xSpeed) {
 		int currentTile = (int) (hitbox.x/Game.TILES_SIZE);
 		
 		if(xSpeed > 0) {
@@ -53,7 +53,7 @@ public class CollisionMethods extends Rect{
 		}
 	}
 	
-	public static double getEntityYPosUnderRoofOrAboveFloor(Rect hitbox, double airSpeed) {
+	public static double GetEntityYPosUnderRoofOrAboveFloor(Rect hitbox, double airSpeed) {
 		int currentTile = (int) (hitbox.y/Game.TILES_SIZE);
 		
 		if(airSpeed > 0) {
@@ -67,11 +67,11 @@ public class CollisionMethods extends Rect{
 		}
 	}
 	
-	public static boolean isEntityOnFloor(Rect hitbox, int[][] lvlData) {
+	public static boolean IsEntityOnFloor(Rect hitbox, int[][] lvlData) {
 		// Check the pixel below bottom left and bottom right
 		
-		if(!isSolid(hitbox.x, hitbox.y + hitbox.h + 1, lvlData) &&
-		   !isSolid(hitbox.x+hitbox.w, hitbox.y + hitbox.h+1, lvlData)) 
+		if(!IsSolid(hitbox.x, hitbox.y + hitbox.h + 1, lvlData) &&
+		   !IsSolid(hitbox.x+hitbox.w, hitbox.y + hitbox.h+1, lvlData)) 
 		{
 			return false;
 		}

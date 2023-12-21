@@ -5,6 +5,7 @@ import static utilz.Constants.PlayerConstants.*;
 import static utilz.CollisionMethods.*;
 import static utilz.CollisionMethods.*;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -20,10 +21,10 @@ public class Player extends Entity{
 	private BufferedImage[][] animations;
 	private int aniTick, aniIndex, aniSpeed = 30;
 	private int playerAction = IDLE;
-	private boolean isMoving = false;
+	private boolean moving = false;
 	private boolean isAttacking = false;
 	private boolean isRunning = false;
-	private boolean up, down, left, right, jump;
+	private boolean left, right, jump;
 	private double playerSpeed = 0.5 * Game.SCALE;
 	private int[][]lvlData;
 	private int flipW = 1; // the width of the character
@@ -36,6 +37,18 @@ public class Player extends Entity{
 	private double jumpSpeed = -2.25 * Game.SCALE;
 	private double fallCollision = 0.5 * Game.SCALE;
 	private boolean isInAir = false;
+	
+	private BufferedImage healthImg;
+	
+	private int healthWidth = (int)(176 * Game.SCALE);
+	private int healthHeight = (int)(32 * Game.SCALE);
+	private int healthXPos = (int)(10 * Game.SCALE);
+	private int healthYPos = (int)(10 * Game.SCALE);
+	
+	private int healthBarWidth = (int) (139 * Game.SCALE);
+	private int healthBarHeight = (int) (10 * Game.SCALE);
+	private int healthBarXStart = (int) (32 * Game.SCALE);
+	private int healthBarYStart = (int) (11 * Game.SCALE);
 	
 	public Player(double x, double y, int width, int height) {
 		super(x, y, width, height);
@@ -52,8 +65,15 @@ public class Player extends Entity{
 
 	public void render(Graphics pen, int lvlOffset) {
 		pen.drawImage(animations[playerAction][aniIndex], (int)((hitbox.x - xDrawOffset) + flipX)- lvlOffset, (int)(hitbox.y - yDrawOffset), width*flipW, height, null);
+		drawHealth(pen);
 	}
 	
+	private void drawHealth(Graphics pen) {
+		pen.drawImage(healthImg, healthXPos, healthYPos, healthWidth, healthHeight, null);
+		pen.setColor(Color.red);
+		pen.fillRect(healthBarXStart + healthXPos, healthBarYStart + healthYPos, healthBarWidth, healthBarHeight);
+	}
+
 	private void updateAnimationTick() {
 		aniTick++;
 		if (aniTick >= aniSpeed) {
@@ -70,7 +90,7 @@ public class Player extends Entity{
 	private void setAnimation() {
 		int startAnimation = playerAction;
 		
-		if(isMoving) 	{
+		if(moving) 	{
 			if(isRunning) 	playerAction = RUNNING;
 			else 			playerAction = WALKING;
 			
@@ -94,7 +114,7 @@ public class Player extends Entity{
 	}
 	
 	private void updatePosition() {
-		isMoving = false;
+		moving = false;
 		if(jump)	jump();
 		if(!left && !right && !isInAir)	return;
 		
@@ -115,18 +135,18 @@ public class Player extends Entity{
 		}
 		
 		if(!isInAir) {
-			if(!isEntityOnFloor(hitbox, lvlData)) {
+			if(!IsEntityOnFloor(hitbox, lvlData)) {
 				isInAir = true;
 			}
 		}
 		
 		if(isInAir) {
-			if(canMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.w, hitbox.h, lvlData)) {
+			if(CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.w, hitbox.h, lvlData)) {
 				hitbox.y += airSpeed;
 				airSpeed += gravity;
 				updateXPosition(xSpeed);
 			}else {
-				hitbox.y = getEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
+				hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
 				if(airSpeed > 0)		resetInAir();
 				else					airSpeed = fallCollision;
 				updateXPosition(xSpeed);
@@ -134,7 +154,7 @@ public class Player extends Entity{
 		}else {
 			updateXPosition(xSpeed);
 		}
-		isMoving = true;
+		moving = true;
 		
 	}
 	
@@ -150,10 +170,10 @@ public class Player extends Entity{
 	}
 
 	private void updateXPosition(double xSpeed) {
-		if(canMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.w, hitbox.h, lvlData)) {
+		if(CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.w, hitbox.h, lvlData)) {
 			hitbox.x += xSpeed;
 		}else {
-			hitbox.x = getEntityXPosNextToWall(hitbox, xSpeed);
+			hitbox.x = GetEntityXPosNextToWall(hitbox, xSpeed);
 		}
 	}
 
@@ -167,19 +187,17 @@ public class Player extends Entity{
 					animations[row][col] = img.getSubimage(col*32, row*32, 32, 32);
 				}
 			}
-	
+		healthImg = LoadSave.GetSprite(LoadSave.HEALTH_BAR);
 	}
 	
 	public void loadLvlData(int[][] lvlData) {
 		this.lvlData = lvlData;
-		if(!isEntityOnFloor(hitbox, lvlData)) isInAir = true;
+		if(!IsEntityOnFloor(hitbox, lvlData)) isInAir = true;
 	}
 	
 	public void resetDirBooleans() {
 		left = false;
-		right = false;
-		up = false;
-		down = false;
+		right = false; 
 	}
 	
 	public void setRunning(boolean isRunning) {

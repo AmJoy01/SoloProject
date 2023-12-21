@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import entities.EnemyManager;
 import entities.Player;
 import level.LevelManager;
 import main.Game;
@@ -15,12 +16,13 @@ import utilz.LoadSave;
 public class Playing extends State implements StateMethods{
 	
 	private Player player;
+	private EnemyManager enemyManager;
 	private LevelManager levelManager;
 	private PauseOverlay pauseOverlay;
 	private boolean paused = false; //show the pause screen or not
 	
 	/*********IMAGES**********/
-	private BufferedImage backgroundImg, moonImg, bigClouds, darkClouds;
+	private BufferedImage backgroundImg, bigClouds, darkClouds;
 
 	/*******CAMERA*******/
 	private int xLvlOffset;
@@ -52,13 +54,13 @@ public class Playing extends State implements StateMethods{
 		
 		/*Images for Background*/
 		backgroundImg = LoadSave.GetSprite(LoadSave.PLAYING_BACKGROUND_IMG);
-		moonImg = LoadSave.GetSprite(LoadSave.MOON_IMG);
 		bigClouds = LoadSave.GetSprite(LoadSave.BIG_CLOUDS);
 		darkClouds = LoadSave.GetSprite(LoadSave.BIG_DARK_CLOUDS);
 	}
 	
 	public void init() {
 		levelManager = new LevelManager(game);
+		enemyManager = new EnemyManager(this);
 		player = new Player(200, 200, (int)(32*Game.SCALE), (int)(32*Game.SCALE));
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
 		pauseOverlay = new PauseOverlay(this);
@@ -94,11 +96,11 @@ public class Playing extends State implements StateMethods{
 	public void draw(Graphics pen) {
 		/*Draw background*/
 		pen.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_WIDTH, null);
-		pen.drawImage(moonImg, Game.GAME_WIDTH/2, 200, moonImg.getWidth(), moonImg.getHeight(), null);
 		
 		drawClouds(pen);
 		levelManager.draw(pen, xLvlOffset);
 		player.render(pen, xLvlOffset);
+		
 		if(paused)	{
 			pen.setColor(new Color(0,0,0,150));
 			pen.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);

@@ -12,7 +12,6 @@ import javax.imageio.ImageIO;
 public class LoadSave {
 	public static final String PLAYER = "characters/AnimationSheet_Characters.png";
 	public static final String LEVEL = "levels/dungeon_tileset.png";
-//	public static final String LEVEL_ONE_DATA = "data/level_one_data.png";
 	public static final String LEVEL_ONE_DATA = "data/level_one_data_long.png";
 	public static final String MENU_BACKGROUND = "menu/menu_background.png";
 	public static final String MENU_BUTTONS = "menu/button_atlas.png";
@@ -22,9 +21,10 @@ public class LoadSave {
 	public static final String VOLUME_BUTTONS = "menu/volume_buttons.png"; 
 	public static final String BACKGROUND_MENU = "levels/1.png";
 	public static final String PLAYING_BACKGROUND_IMG = "levels/1.png";
-	public static final String MOON_IMG = "levels/2.png";
 	public static final String BIG_CLOUDS = "levels/3.png";
 	public static final String BIG_DARK_CLOUDS = "levels/4.png";
+	public static final String HEALTH_BAR = "characters/healthbar.png";	
+	public static final String GREEN_SLIME = "characters/green_slime.png";	
 	
 	public static BufferedImage GetSprite(String fileName) {
 		BufferedImage img = null;
