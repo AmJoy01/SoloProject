@@ -30,10 +30,10 @@ public abstract class Enemy extends Entity{
 		initHitBox(x,y,width,height);
 	}
 	
-	protected void firstUpdateCheck(int[][] lvlData) {
-		if(!IsEntityOnFloor(hitbox, lvlData)) inAir = true;
-		firstUpdate = false;
-	}
+//	protected void firstUpdateCheck(int[][] lvlData) {
+//		if(!IsEntityOnFloor(hitbox, lvlData)) inAir = true;
+//		firstUpdate = false;
+//	}
 	
 	protected void updateAnimationTick() {
 		aniTick++;
@@ -46,10 +46,56 @@ public abstract class Enemy extends Entity{
 		}
 	}
 
-	public void update() {
+	public void update(int[][] lvlData) {
+		updateMove(lvlData);
 		updateAnimationTick();
 	}
 	
+	private void updateMove(int[][] lvlData) {
+		if(firstUpdate) {
+			if(!IsEntityOnFloor(hitbox, lvlData)) {
+				inAir = true;
+			}
+			firstUpdate = false;
+		}
+		if(inAir) {
+			if(CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.w, hitbox.h, lvlData)) {
+				hitbox.y += fallSpeed;
+				fallSpeed += gravity;
+			}else {
+				inAir = false;
+				hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, fallSpeed);
+			}
+		}else {
+			switch(enemyState) {
+			case IDLE:
+				enemyState = RUNNING;
+				break;
+			case RUNNING:
+				double xSpeed = 0;
+				
+				if(walkDir == LT)
+					xSpeed = -walkSpeed;
+				else
+					xSpeed = walkSpeed;
+				
+				if(CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.w, hitbox.h, lvlData)) {
+					if(IsFloor(hitbox, xSpeed, lvlData)) {
+						hitbox.x += xSpeed;
+						return;
+					}
+				}
+				changeWalkDir();
+				break;
+			}
+		}
+	}
+	
+	private void changeWalkDir() {
+		if(walkDir == LT)		walkDir = RT;
+		else 					walkDir = LT;
+	}
+
 	public int getAniIndex() {
 		return aniIndex;
 	}

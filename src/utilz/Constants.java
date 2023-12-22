@@ -14,12 +14,12 @@ public class Constants {
 		
 		public static final int SLIME_WIDTH_DEFAULT = 32;
 		public static final int SLIME_HEIGHT_DEFAULT = 32;
-		public static final int SLIME_WIDTH = (int)(SLIME_WIDTH_DEFAULT * Game.SCALE);
-		public static final int SLIME_HEIGHT = (int)(SLIME_HEIGHT_DEFAULT * Game.SCALE);
+		public static final int SLIME_WIDTH = (int)(SLIME_WIDTH_DEFAULT * (Game.SCALE + 1));
+		public static final int SLIME_HEIGHT = (int)(SLIME_HEIGHT_DEFAULT * (Game.SCALE + 1));
 		
 		//MIGHT NEED TO DRAW THE OFFSET OF X AND Y
-		public static final int SLIME_DRAWOFFSET_X = (int)(26 * Game.SCALE); // start at the end of the camera
-		public static final int SLIME_DRAWOFFSET_Y = (int)(1 * Game.SCALE); // start above the platform
+		public static final int SLIME_DRAWOFFSET_X = (int)(20 * Game.SCALE); // start of the sprite
+		public static final int SLIME_DRAWOFFSET_Y = (int)(38 * Game.SCALE); // start above the platform
 		
 		
 		public static int GetSpriteAmount(int enemyType, int enemyState) {

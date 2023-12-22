@@ -25,9 +25,9 @@ public class EnemyManager {
 		slimes = LoadSave.GetSlimes();
 	}
 
-	public void update() {
+	public void update(int[][] lvlData) {
 		for(Slime s: slimes) {
-			s.update();
+			s.update(lvlData);
 		}
 	}
 

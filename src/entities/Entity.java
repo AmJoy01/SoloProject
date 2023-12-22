@@ -14,7 +14,7 @@ public class Entity{
 		this.height = height;
 	}
 	
-	protected void drawHitBox(Graphics pen) {
+	protected void drawHitBox(Graphics pen, int xLvlOffset) {
 		hitbox.draw(pen);
 	}
 	

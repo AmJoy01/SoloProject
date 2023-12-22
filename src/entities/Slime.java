@@ -15,7 +15,7 @@ public class Slime extends Enemy{
 	
 	public Slime(double x, double y) {
 		super(x, y, SLIME_WIDTH, SLIME_HEIGHT, SLIME);
-		initHitBox(x, y, (int)(13 * Game.SCALE),(int)(11* Game.SCALE));
+		initHitBox(x, y, (int)(13 * Game.SCALE),(int)(11 * Game.SCALE));
 		initAttackBox();
 	}
 
@@ -23,15 +23,15 @@ public class Slime extends Enemy{
 		attackBox = new Rect(x,y, (int)(32 * Game.SCALE), (int)(32 * Game.SCALE));
 	}
 	
-	public void update(int[][] lvlData, Player player) {
-		updateBehavior(lvlData, player);
-	}
+//	public void update(int[][] lvlData, Player player) {
+//		updateBehavior(lvlData, player);
+//	}
 	
-	private void updateBehavior(int[][] lvlData, Player player) {
-		if(firstUpdate) {
-			firstUpdateCheck(lvlData);
-		}
-	}
+//	private void updateBehavior(int[][] lvlData, Player player) {
+//		if(firstUpdate) {
+//			firstUpdateCheck(lvlData);
+//		}
+//	}
 
 	public void drawAttackBox(Graphics pen, int xLvlOffset) {
 		pen.setColor(Color.red);

@@ -77,4 +77,12 @@ public class CollisionMethods extends Rect{
 		}
 		return true;
 	}
+	
+	public static boolean IsFloor(Rect hitbox, double xSpeed, int[][] lvlData) {
+		return IsSolid(
+				hitbox.x + xSpeed,
+				hitbox.y + hitbox.h + 1,
+				lvlData
+				);
+	}
 }

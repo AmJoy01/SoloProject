@@ -26,8 +26,8 @@ public class Playing extends State implements StateMethods{
 
 	/*******CAMERA*******/
 	private int xLvlOffset;
-	private int leftBorder = (int) (0.3 * Game.GAME_WIDTH); // 20%
-	private int rightBorder = (int) (0.7 * Game.GAME_WIDTH); // 80%
+	private int leftBorder = (int) (0.3 * Game.GAME_WIDTH); // 30%
+	private int rightBorder = (int) (0.7 * Game.GAME_WIDTH); // 70%
 	private int lvlTilesWide = LoadSave.GetLevelData()[0].length;
 	private int maxTilesOffset = lvlTilesWide - Game.TILES_WIDTH;
 	private int maxLvlOffsetX = maxTilesOffset * Game.TILES_SIZE;
@@ -75,7 +75,7 @@ public class Playing extends State implements StateMethods{
 		else{
 			levelManager.update();
 			player.update();
-			enemyManager.update();
+			enemyManager.update(levelManager.getCurrentLevel().getLevelData());
 			checkCloseToBorder();
 		}
 	}

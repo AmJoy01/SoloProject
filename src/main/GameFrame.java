@@ -15,6 +15,7 @@ public class GameFrame extends JFrame{
 		//setLocationRelativeTo(null);
 		setResizable(false);
 		pack();
+		setLocationRelativeTo(null);
 		setVisible(true);
 		addWindowFocusListener(new WindowFocusListener() {
 			
