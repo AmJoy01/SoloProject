@@ -25,9 +25,9 @@ public class EnemyManager {
 		slimes = LoadSave.GetSlimes();
 	}
 
-	public void update(int[][] lvlData) {
+	public void update(int[][] lvlData, Player player) {
 		for(Slime s: slimes) {
-			s.update(lvlData);
+			s.update(lvlData, player);
 		}
 	}
 
@@ -37,14 +37,30 @@ public class EnemyManager {
 	
 	private void drawSlimes(Graphics pen, int xLvlOffset) {
 		for(Slime s : slimes) {
-			pen.drawImage(
-					slimeArr[s.getEnemyState()][s.getAniIndex()], 
-					(int)s.getHitBox().x - xLvlOffset - SLIME_DRAWOFFSET_X, 
-					(int)s.getHitBox().y - SLIME_DRAWOFFSET_Y, 
-					SLIME_WIDTH, SLIME_HEIGHT, null);
+			if(s.isActive()) {
+				pen.drawImage(
+						slimeArr[s.getEnemyState()][s.getAniIndex()], 
+						(int)s.getHitBox().x - xLvlOffset - SLIME_DRAWOFFSET_X + s.flipX(), 
+						(int)s.getHitBox().y - SLIME_DRAWOFFSET_Y, 
+						SLIME_WIDTH * s.flipW(), SLIME_HEIGHT, null);	
+			}
+			
+			s.drawAttackBox(pen, xLvlOffset);
 		}
+		
 	}
 
+	public void checkEnemyHit(Rect attackBox) {
+		for(Slime s : slimes) {
+			if(s.isActive()) {				
+				if(attackBox.overlaps(s.getHitBox())) {
+					s.hurt(10);
+					return;
+				}
+			}
+		}
+	}
+	
 	private void loadEnemyImgs() {
 		slimeArr = new BufferedImage[4][7];
 		BufferedImage temp = LoadSave.GetSprite(LoadSave.GREEN_SLIME);
@@ -52,6 +68,12 @@ public class EnemyManager {
 			for(int col = 0; col < slimeArr[row].length; col++) {
 				slimeArr[row][col] = temp.getSubimage(col * SLIME_WIDTH_DEFAULT, row * SLIME_HEIGHT_DEFAULT, SLIME_WIDTH_DEFAULT, SLIME_HEIGHT_DEFAULT);
 			}
+		}
+	}
+	
+	public void resetAllEnemies() {
+		for(Slime s : slimes) {
+			s.resetEnemy();
 		}
 	}
 }

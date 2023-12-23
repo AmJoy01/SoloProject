@@ -23,6 +23,17 @@ public class Rect {
 				   (my <= y+h);
 	}
 	
+	public boolean overlaps(Rect r) {
+		return (x 		<= r.x + r.w) && 
+			   (x + w 	>= r.x		) &&
+			   (y 		<= r.y + r.h) && 
+			   (y + h 	>= r.y		);
+	}
+	
+	public boolean isRightOf(Rect r) {
+		return x + w < r.x;
+	}
+	
 	public void draw(Graphics pen) {
 		pen.setColor(Color.GREEN);
 		pen.drawRect((int)x, (int)y, (int)w, (int)h);

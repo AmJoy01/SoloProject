@@ -30,7 +30,12 @@ public class CollisionMethods extends Rect{
 		
 		double xIndex = x/Game.TILES_SIZE;
 		double yIndex = y/Game.TILES_SIZE;
-		int value = lvlData[(int)yIndex][(int)xIndex];
+		
+		return IsTileSolid((int)xIndex, (int)yIndex, lvlData);
+	}
+	
+	public static boolean IsTileSolid(int x, int y, int[][] lvlData) {
+		int value = lvlData[y][x];
 		
 		/*NEED TO CHANGE THIS BASED ON TILESET */
 		/* USING DEFAULT TILESET WITH 48 TILES (12 COLUMNS AND 4 ROWS) 26 X 14 lvlData */
@@ -38,6 +43,7 @@ public class CollisionMethods extends Rect{
 		
 		return false;
 	}
+	
 	
 	public static double GetEntityXPosNextToWall(Rect hitbox, double xSpeed) {
 		int currentTile = (int) (hitbox.x/Game.TILES_SIZE);
@@ -79,10 +85,27 @@ public class CollisionMethods extends Rect{
 	}
 	
 	public static boolean IsFloor(Rect hitbox, double xSpeed, int[][] lvlData) {
-		return IsSolid(
-				hitbox.x + xSpeed,
-				hitbox.y + hitbox.h + 1,
-				lvlData
-				);
+		return IsSolid(hitbox.x + xSpeed, hitbox.y + hitbox.h + 1, lvlData);
+	}
+	
+	public static boolean IsSightClear(int[][] lvlData, Rect firstHitbox, 
+									   Rect secondHitbox, int tileY) 
+	{
+		int firstXTile = (int)(firstHitbox.x / Game.TILES_SIZE);
+		int secondXTile = (int)(secondHitbox.x / Game.TILES_SIZE);
+		
+		if(firstXTile > secondXTile) {
+			return IsAllTilesWalkable(secondXTile, firstXTile, tileY, lvlData);
+		}
+		
+		return IsAllTilesWalkable(firstXTile, secondXTile, tileY, lvlData);
+	}
+
+	public static boolean IsAllTilesWalkable(int startX, int endX, int y, int[][] lvlData) {
+		for(int i = 0; i < endX - startX; i++) {
+			if(IsTileSolid(startX + i, y, lvlData))			return false;
+			if(!IsTileSolid(startX + i, y + 1, lvlData))	return false;
+		}
+		return true;
 	}
 }
