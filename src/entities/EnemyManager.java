@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import gamestates.Playing;
+import level.Level;
 import utilz.LoadSave;
 
 public class EnemyManager {
@@ -18,16 +19,23 @@ public class EnemyManager {
 	public EnemyManager(Playing playing) {
 		this.playing = playing;
 		loadEnemyImgs();
-		addEnemies();
 	}
 
-	private void addEnemies() {
-		slimes = LoadSave.GetSlimes();
+	public void loadEnemies(Level level) {
+		slimes = level.getSlimes();
 	}
 
 	public void update(int[][] lvlData, Player player) {
+		boolean isAnyActive = false; //is alive
 		for(Slime s: slimes) {
-			s.update(lvlData, player);
+			if(s.isActive()) {				
+				s.update(lvlData, player);
+				isAnyActive = true;
+			}
+		}
+		
+		if(!isAnyActive) {
+			playing.setLevelCompleted(true);
 		}
 	}
 
@@ -44,8 +52,8 @@ public class EnemyManager {
 						(int)s.getHitBox().y - SLIME_DRAWOFFSET_Y, 
 						SLIME_WIDTH * s.flipW(), SLIME_HEIGHT, null);	
 			}
-			
-			s.drawAttackBox(pen, xLvlOffset);
+//			s.drawHitBox(pen, xLvlOffset);
+//			s.drawAttackBox(pen, xLvlOffset);
 		}
 		
 	}

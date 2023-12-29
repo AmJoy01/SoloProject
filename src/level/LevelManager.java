@@ -1,27 +1,53 @@
  package level;
 
+import static main.Game.TILES_HEIGHT;
+import static main.Game.TILES_SIZE;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
+import gamestates.Gamestate;
+import level.Level;
 import main.Game;
-
-import static main.Game.*;
 import utilz.LoadSave;
 
 public class LevelManager {
 	
 	private Game game;
 	private BufferedImage[] levelSprite;
-	private Level levelOne;
-	
+	private ArrayList<Level> levels;
+	private int lvlIndex = 0;
 	
 	public LevelManager(Game game) {
 		this.game = game;
 		importLevelSprite();
-		levelOne = new Level(LoadSave.GetLevelData());
+		levels = new ArrayList<>();
+		buildAllLevels();
 	}
 
-//*
+	public void loadNextLevel() {
+		lvlIndex++;
+		if(lvlIndex >= levels.size()) {
+			lvlIndex = 0;
+			System.out.println("No more levels");
+			Gamestate.state = Gamestate.MENU;
+		}
+		
+		Level newLevel = levels.get(lvlIndex);
+		game.getPlaying().getEnemyManeger().loadEnemies(newLevel);
+		game.getPlaying().getPlayer().loadLvlData(newLevel.getLevelData());
+		game.getPlaying().setMaxLvlOffset(newLevel.getLvlOffset());
+	}
+	
+   private void buildAllLevels() {
+		BufferedImage[] allLevels = LoadSave.GetAllLevels();
+		for(BufferedImage img : allLevels) {
+			levels.add(new Level(img));
+		}
+		
+	}
+
 	private void importLevelSprite() {
 		BufferedImage img = LoadSave.GetSprite(LoadSave.LEVEL);
 		levelSprite = new BufferedImage[48];
@@ -34,13 +60,11 @@ public class LevelManager {
 		}
 		
 	}
-//*/	
-
 	
 	public void draw (Graphics pen, int lvlOffset) {
 		for(int j = 0; j < TILES_HEIGHT; j++) {
-			for(int i = 0; i < levelOne.getLevelData()[0].length; i++) {	
-				int index = levelOne.getSpriteIndex(i, j);
+			for(int i = 0; i < levels.get(lvlIndex).getLevelData()[0].length; i++) {	
+				int index = levels.get(lvlIndex).getSpriteIndex(i, j);
 				pen.drawImage(levelSprite[index], TILES_SIZE*i - lvlOffset, TILES_SIZE *j ,TILES_SIZE, TILES_SIZE, null);
 			}
 		}
@@ -51,6 +75,10 @@ public class LevelManager {
 	}
 	
 	public Level getCurrentLevel() {
-		return levelOne;
+		return levels.get(lvlIndex);
+	}
+	
+	public int getAmountOfLevels() {
+		return levels.size();
 	}
 }

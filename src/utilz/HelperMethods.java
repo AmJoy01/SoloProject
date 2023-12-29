@@ -1,12 +1,19 @@
 package utilz;
 
 import main.Game;
+
+import static utilz.Constants.EnemyConstants.SLIME;
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
 import entities.*;
 
-public class CollisionMethods extends Rect{
+public class HelperMethods extends Rect{
 
 	
-	public CollisionMethods(double x, double y, double w, double h) {
+	public HelperMethods(double x, double y, double w, double h) {
 		super(x, y, w, h);
 	}
 
@@ -18,8 +25,7 @@ public class CollisionMethods extends Rect{
 		   !IsSolid(x, y+height, lvlData))
 		{		
 		   return true;
-		}
-				
+		}	
 				return false;
 	}
 	
@@ -85,6 +91,10 @@ public class CollisionMethods extends Rect{
 	}
 	
 	public static boolean IsFloor(Rect hitbox, double xSpeed, int[][] lvlData) {
+		if(xSpeed > 0 ) {
+			
+			return IsSolid(hitbox.x + hitbox.w + xSpeed, hitbox.y + hitbox.h + 1, lvlData);
+		}
 		return IsSolid(hitbox.x + xSpeed, hitbox.y + hitbox.h + 1, lvlData);
 	}
 	
@@ -107,5 +117,37 @@ public class CollisionMethods extends Rect{
 			if(!IsTileSolid(startX + i, y + 1, lvlData))	return false;
 		}
 		return true;
+	}
+	
+	public static ArrayList<Slime> GetSlimes(BufferedImage img){
+		ArrayList<Slime> list = new ArrayList<>();
+		
+		for(int j = 0; j < img.getHeight(); j++) {
+			for(int i = 0; i < img.getWidth(); i++) {
+				Color color = new Color(img.getRGB(i, j));
+				int value = color.getGreen();
+				if(value == SLIME) {
+					list.add(new Slime(i* Game.TILES_SIZE, j * Game.TILES_SIZE));
+				}
+			}
+		} 
+		return list;
+	}
+	
+	public static int[][] GetLevelData(BufferedImage img){
+		
+		int[][] lvlData = new int[img.getHeight()][img.getWidth()];
+
+		for(int j = 0; j < img.getHeight(); j++) {
+			for(int i = 0; i < img.getWidth(); i++) {
+				Color color = new Color(img.getRGB(i, j));
+				int value = color.getRed();
+				if(value >= 48) {
+					value = 0;
+				}
+				lvlData[j][i] = value;
+			}
+		}
+		return lvlData;
 	}
 }

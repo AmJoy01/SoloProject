@@ -34,8 +34,4 @@ public class Rect {
 		return x + w < r.x;
 	}
 	
-	public void draw(Graphics pen) {
-		pen.setColor(Color.GREEN);
-		pen.drawRect((int)x, (int)y, (int)w, (int)h);
-	}
 }

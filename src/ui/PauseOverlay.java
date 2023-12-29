@@ -1,5 +1,6 @@
 package ui;
 
+import static utilz.Constants.UI.MenuNextButtons.URM_SIZE;
 import static utilz.Constants.UI.PauseButtons.SOUND_SIZE;
 import static utilz.Constants.UI.URMButtons.*;
 import static utilz.Constants.UI.VolumeButtons.*;
@@ -24,6 +25,7 @@ public class PauseOverlay {
 	private SoundButton musicButton, sfxButton;
 	private UrmButton menuBtn, replayBtn, unpauseBtn;
 	private VolumeButton volumeButton;
+	private MenuNextButton menuButton, nextButton;
 	
 	public PauseOverlay(Playing playing) {
 		this.playing = playing;
@@ -31,8 +33,18 @@ public class PauseOverlay {
 		createSoundButtons();
 		createUrmButtons();
 		createVolumeButton();
+//		createMenuNextButton();
 	}
 	
+	private void createMenuNextButton() {
+		int menuX = (int)(313 * Game.SCALE);
+		int nextX = (int)(462 * Game.SCALE);
+		int bY = (int) (325 * Game.SCALE);
+		
+		menuButton = new MenuNextButton(menuX, bY, URM_SIZE, URM_SIZE, 2); // last parameter is rowIndex, so home/menu button is on the 3rd row
+		nextButton = new MenuNextButton(nextX, bY, URM_SIZE, URM_SIZE, 0); 
+	}
+
 	private void createVolumeButton() {
 		int volumeX = (int) (309 * Game.SCALE);
 		int volumeY = (int) (278 * Game.SCALE);
@@ -122,7 +134,10 @@ public class PauseOverlay {
 				playing.unpauseGame();
 			}
 		}else if(isIn(e, replayBtn)) {
-			if(replayBtn.isMousePressed())		System.out.println("Replay level underconstruction");
+			if(replayBtn.isMousePressed()) {
+				playing.resetAll();
+				playing.unpauseGame();
+			}
 		}else if(isIn(e, unpauseBtn)) {
 			if(unpauseBtn.isMousePressed())		playing.unpauseGame();
 		}

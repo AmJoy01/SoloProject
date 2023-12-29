@@ -1,10 +1,10 @@
 package entities;
 
 import static utilz.Constants.Directions.*;
-import static utilz.CollisionMethods.CanMoveHere;
-import static utilz.CollisionMethods.GetEntityYPosUnderRoofOrAboveFloor;
-import static utilz.CollisionMethods.IsEntityOnFloor;
-import static utilz.CollisionMethods.IsFloor;
+import static utilz.HelperMethods.CanMoveHere;
+import static utilz.HelperMethods.GetEntityYPosUnderRoofOrAboveFloor;
+import static utilz.HelperMethods.IsEntityOnFloor;
+import static utilz.HelperMethods.IsFloor;
 import static utilz.Constants.EnemyConstants.IDLE;
 import static utilz.Constants.EnemyConstants.RUNNING;
 import static utilz.Constants.EnemyConstants.ATTACK;
@@ -26,14 +26,14 @@ public class Slime extends Enemy{
 	
 	public Slime(double x, double y) {
 		super(x, y, SLIME_WIDTH, SLIME_HEIGHT, SLIME);
-		initHitBox(x, y, (int)(13 * Game.SCALE),(int)(11 * Game.SCALE));
+		initHitBox(x, y, (int)(22 * Game.SCALE),(int)(18 * Game.SCALE));
 		initAttackBox();
 	}
 	
 	private void initAttackBox() {
 		attackBox = new Rect(x,y, (int)(46 * Game.SCALE), (int)(30 * Game.SCALE));
-		attackBoxOffsetX = (int)(Game.SCALE * 20);
-		attackBoxOffsetY = (int)(Game.SCALE * 20);
+		attackBoxOffsetX = (int)(Game.SCALE * 10);
+		attackBoxOffsetY = (int)(Game.SCALE * 10);
 	}
 	
 	public void update(int[][] lvlData, Player player) {
@@ -61,9 +61,8 @@ public class Slime extends Enemy{
 			case RUNNING:
 				if(canSeePlayer(lvlData, player)) {
 					turnTowardsPlayer(player);
-				}
-				if(isPlayerCloseForAttack(player)) {
-					newState(ATTACK);
+					if(isPlayerCloseForAttack(player)) 
+						newState(ATTACK);
 				}
 				move(lvlData);
 				break;
@@ -84,6 +83,7 @@ public class Slime extends Enemy{
 		if(walkDir == RT) return -1;
 		else 				 return 1;
 	}
+	
 	
 	public void drawAttackBox(Graphics pen, int xLvlOffset) {
 		pen.setColor(Color.red);

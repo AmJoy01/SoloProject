@@ -6,7 +6,7 @@ import static utilz.Constants.EnemyConstants.*;
 import entities.Player;
 
 import static utilz.Constants.EnemyConstants.GetEnemyDmg;
-import static utilz.CollisionMethods.*;
+import static utilz.HelperMethods.*;
 
 import main.Game;
 
@@ -154,4 +154,5 @@ public abstract class Enemy extends Entity{
 	public boolean isActive() {
 		return active;
 	}
+
 }

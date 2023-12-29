@@ -18,8 +18,8 @@ public class Constants {
 		public static final int SLIME_HEIGHT = (int)(SLIME_HEIGHT_DEFAULT * (Game.SCALE + 1));
 		
 		//MIGHT NEED TO DRAW THE OFFSET OF X AND Y
-		public static final int SLIME_DRAWOFFSET_X = (int)(20 * Game.SCALE); // start of the sprite
-		public static final int SLIME_DRAWOFFSET_Y = (int)(38 * Game.SCALE); // start above the platform
+		public static final int SLIME_DRAWOFFSET_X = (int)(12 * Game.SCALE); // start of the sprite
+		public static final int SLIME_DRAWOFFSET_Y = (int)(30 * Game.SCALE); // start above the platform
 		
 		
 		public static int GetSpriteAmount(int enemyType, int enemyState) {
@@ -58,10 +58,10 @@ public class Constants {
 	
 	public static class UI{
 		public static class Buttons{
-			public static final int B_WIDTH_DEFAULT = 140;
-			public static final int B_HEIGHT_DEFAULT = 56;
-			public static final int B_WIDTH = (int)(B_WIDTH_DEFAULT * Game.SCALE);
-			public static final int B_HEIGHT = (int)(B_HEIGHT_DEFAULT * Game.SCALE);
+			public static final int B_WIDTH_DEFAULT = 64;
+			public static final int B_HEIGHT_DEFAULT = 25;
+			public static final int B_WIDTH = (int)(B_WIDTH_DEFAULT * (Game.SCALE + 2));
+			public static final int B_HEIGHT = (int)(B_HEIGHT_DEFAULT * (Game.SCALE + 2));
 			
 		}
 		
@@ -75,6 +75,10 @@ public class Constants {
 			public static final int URM_HEIGHT_DEFAULT = 16;
 			public static final int URM_WIDTH = (int) (URM_WIDTH_DEFAULT * Game.SCALE);
 			public static final int URM_HEIGHT = (int) (URM_HEIGHT_DEFAULT * Game.SCALE);
+		}
+		public static class MenuNextButtons{
+			public static final int URM_DEFAULT_SIZE = 56;
+			public static final int URM_SIZE = (int) (URM_DEFAULT_SIZE * Game.SCALE);
 		}
 		
 		public static class VolumeButtons{
@@ -109,10 +113,10 @@ public class Constants {
 	
 		public static int GetSpriteAmount(int player_action) {
 			switch(player_action) {
-			case DEAD: 		return 8;
 			case RUNNING: 	return 8;
-			case ATTACKING: return 8;
+			case DEAD: 		return 7;
 			case IDLE: 		return 6;
+			case ATTACKING: return 4;
 			case WALKING: 	return 4;
 			case FALLING: 	return 2;
 			case JUMP: 		return 1;

@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import gamestates.Gamestate;
 import gamestates.Menu;
 import gamestates.Playing;
+import utilz.LoadSave;
 
 
 public class Game implements Runnable{
@@ -30,6 +31,7 @@ public class Game implements Runnable{
 		init();
 		gamePanel = new GamePanel(this);
 		gameFrame = new GameFrame(gamePanel); // Calls the window size from GameFrame class
+		gamePanel.setFocusable(true);
 		gamePanel.requestFocus();
 		gameLoop();
 	}

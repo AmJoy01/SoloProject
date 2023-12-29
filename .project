@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>res/levels/practicelvl.png</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Pictures/PixelArt/vg_sprites/practicelvl.png</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

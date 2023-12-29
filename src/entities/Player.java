@@ -1,9 +1,9 @@
 package entities;
 
-import static utilz.CollisionMethods.CanMoveHere;
-import static utilz.CollisionMethods.GetEntityXPosNextToWall;
-import static utilz.CollisionMethods.GetEntityYPosUnderRoofOrAboveFloor;
-import static utilz.CollisionMethods.IsEntityOnFloor;
+import static utilz.HelperMethods.CanMoveHere;
+import static utilz.HelperMethods.GetEntityXPosNextToWall;
+import static utilz.HelperMethods.GetEntityYPosUnderRoofOrAboveFloor;
+import static utilz.HelperMethods.IsEntityOnFloor;
 import static utilz.Constants.PlayerConstants.ATTACKING;
 import static utilz.Constants.PlayerConstants.FALLING;
 import static utilz.Constants.PlayerConstants.GetSpriteAmount;
@@ -14,6 +14,7 @@ import static utilz.Constants.PlayerConstants.WALKING;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import gamestates.Playing;
@@ -75,6 +76,12 @@ public class Player extends Entity{
 		initAttackBox();
 	}
 
+	public void setSpawn(Point spawn) {
+		this.x = spawn.x;
+		this.y = spawn.y;
+		hitbox.x = x;
+		hitbox.y = y;
+	}
 	
 	private void initAttackBox() {
 		attackBox = new Rect(x, y, (int)(10 * Game.SCALE), (int)(25 * Game.SCALE));
@@ -118,7 +125,8 @@ public class Player extends Entity{
 	public void render(Graphics pen, int lvlOffset) {
 		pen.drawImage(animations[playerAction][aniIndex], (int)((hitbox.x - xDrawOffset) + flipX)- lvlOffset, (int)(hitbox.y - yDrawOffset), width*flipW, height, null);
 		
-		drawAttackBox(pen, lvlOffset);
+//		drawHitBox(pen, lvlOffset);
+//		drawAttackBox(pen, lvlOffset);
 		drawHealth(pen);
 	}
 	
@@ -154,25 +162,24 @@ public class Player extends Entity{
 		
 		if(moving) 	{
 			if(running) 	playerAction = RUNNING;
-			else 			playerAction = WALKING;
-			
+			else 			playerAction = WALKING;	
 		}
-		
-		else								playerAction = IDLE;
-		
+		else {
+			playerAction = IDLE;
+		}
+		if(inAir) {
+			if(airSpeed < 0 )   			playerAction = JUMP;
+			else 							playerAction = FALLING;
+		}
 		if(attacking) {
 			playerAction = ATTACKING;
 			if(startAnimation != ATTACKING) {
-				aniIndex = 3;
+				aniIndex = 1;
 				aniTick = 0;
 				return;
 			}
 		}
 		
-		if(inAir) {
-			if(airSpeed < 0 )   			playerAction = JUMP;
-			else 							playerAction = FALLING;
-		}
 		if(startAnimation != playerAction) 	resetAniTick();
 		
 	}
