@@ -30,7 +30,7 @@ public class LoadSave {
 	public static final String BIG_DARK_CLOUDS = "levels/cloud4.png";
 	public static final String HEALTH_BAR = "characters/healthbar.png";	
 	public static final String GREEN_SLIME = "characters/green_slime.png";	
-	public static final String COMPLETED_IMG = "menu/completed_sprite.png";		
+	public static final String COMPLETED_IMG = "menu/completed_level.png";		
 	
 	public static BufferedImage GetSprite(String fileName) {
 		BufferedImage img = null;
