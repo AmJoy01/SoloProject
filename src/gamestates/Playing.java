@@ -15,16 +15,21 @@ import main.Game;
 import ui.GameOverOverlay;
 import ui.LevelCompletedOverlay;
 import ui.PauseOverlay;
+import utilz.AudioPlayer;
 import utilz.LoadSave;
 
 public class Playing extends State implements StateMethods{
 	
 	private Player player;
+	
 	private LevelManager levelManager;
 	private EnemyManager enemyManager;
+	private AudioPlayer audioPlayerTester;
+	
 	private PauseOverlay pauseOverlay;
 	private GameOverOverlay gameOverOverlay;
 	private LevelCompletedOverlay levelCompletedOverlay;
+	
 	
 	private boolean paused = false; //show the pause screen or not
 	private boolean gameOver;
@@ -57,7 +62,6 @@ public class Playing extends State implements StateMethods{
 	public Playing(Game game) {
 		super(game);
 		init();
-		
 		/*Images for Background*/
 		backgroundImg = LoadSave.GetSprite(LoadSave.PLAYING_BACKGROUND_IMG);
 		bigClouds = LoadSave.GetSprite(LoadSave.BIG_CLOUDS);
@@ -65,7 +69,11 @@ public class Playing extends State implements StateMethods{
 		
 		calcLvlOffset();
 		loadStartLevel();
+		
+		 audioPlayerTester = new AudioPlayer("res/audio/sonatina_letsadventure_2Harbingers.wav");
+	     audioPlayerTester.loop(); // Start playing the background music
 	}
+	
 	
 	public void loadNextLevel() {
 		resetAll();
@@ -216,7 +224,10 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(gameOver)		gameOverOverlay.keyPressed(e);
+		if(gameOver) {
+			gameOverOverlay.keyPressed(e);
+			
+		}
 		else {
 			switch (e.getKeyCode()) {
 			case LT_KEY: 	
@@ -226,7 +237,11 @@ public class Playing extends State implements StateMethods{
 			case UP_KEY:
 			case JP_KEY: 		player.setJump(true); 	 break;
 			case SHIFT_KEY: 	player.setRunning(true); break;
-			case ESC_KEY: 		paused = !paused;		 break;
+			case ESC_KEY: 		
+				paused = !paused;
+				
+				
+				break;
 			}			
 		}
 		
