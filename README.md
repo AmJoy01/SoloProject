@@ -74,7 +74,8 @@ Solo Project is an engaging 2D side-scrolling platformer meticulously crafted by
 <!-- Project Recordings -->
 ### Project Recording
 
-* Playlist goes here
+* [Gameplay Video](https://youtu.be/Pkpts79gYHY)
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
