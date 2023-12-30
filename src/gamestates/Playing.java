@@ -102,7 +102,6 @@ public class Playing extends State implements StateMethods{
 	
 	@Override
 	public void update() {
-		
 		if (paused){
 			pauseOverlay.update();
 			playingMusic.stop();
@@ -118,6 +117,10 @@ public class Playing extends State implements StateMethods{
 			player.update();
 			enemyManager.update(levelManager.getCurrentLevel().getLevelData(), player);
 			checkCloseToBorder();
+		}else {
+			playingMusic.stop();
+			menuMusic.loop();
+			inMenu = true;
 		}
 	}
 
@@ -248,10 +251,12 @@ public class Playing extends State implements StateMethods{
 				paused = !paused;
 				if (paused) {
                     playingMusic.stop();
+                    menuMusic.reset();
                     menuMusic.loop();
                     inMenu = true;
                 } else {
                     menuMusic.stop();
+                    playingMusic.reset();
                     playingMusic.loop();
                     inMenu = false;
                 }

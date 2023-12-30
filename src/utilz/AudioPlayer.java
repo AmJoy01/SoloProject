@@ -36,6 +36,12 @@ public class AudioPlayer {
         }
     }
     
+    public void reset() {
+        if (clip != null) {
+            clip.setFramePosition(0);
+        }
+    }
+    
     public void close() {
         if (clip != null) {
             clip.close();
