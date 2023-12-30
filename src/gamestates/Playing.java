@@ -24,7 +24,7 @@ public class Playing extends State implements StateMethods{
 	
 	private LevelManager levelManager;
 	private EnemyManager enemyManager;
-	private AudioPlayer audioPlayerTester;
+	private AudioPlayer menuMusic, playingMusic;
 	
 	private PauseOverlay pauseOverlay;
 	private GameOverOverlay gameOverOverlay;
@@ -34,6 +34,7 @@ public class Playing extends State implements StateMethods{
 	private boolean paused = false; //show the pause screen or not
 	private boolean gameOver;
 	private boolean lvlCompleted = false;
+	private boolean inMenu = true;
 	/*********IMAGES**********/
 	private BufferedImage backgroundImg, bigClouds, darkClouds;
 
@@ -69,16 +70,16 @@ public class Playing extends State implements StateMethods{
 		
 		calcLvlOffset();
 		loadStartLevel();
-		
-		 audioPlayerTester = new AudioPlayer("res/audio/sonatina_letsadventure_2Harbingers.wav");
-	     audioPlayerTester.loop(); // Start playing the background music
+	
+		menuMusic = new AudioPlayer("res/audio/sonatina_letsadventure_2Harbingers.wav");
+	    playingMusic = new AudioPlayer("res/audio/sonatina_letsadventure_3ToArms.wav");
+	    menuMusic.loop();
 	}
 	
 	
 	public void loadNextLevel() {
 		resetAll();
 		levelManager.loadNextLevel();
-//		player.setSpawn(levelManager.getCurrentLevel().getPlayerSpawn());
 	}
 	
 	private void loadStartLevel() {
@@ -104,9 +105,15 @@ public class Playing extends State implements StateMethods{
 		
 		if (paused){
 			pauseOverlay.update();
+			playingMusic.stop();
 		}else if (lvlCompleted){
 			levelCompletedOverlay.update();
-		}else if(!gameOver) {			
+		}else if(!gameOver) {
+			if(inMenu) {
+				menuMusic.stop();
+				playingMusic.loop();
+				inMenu = false;
+			}
 			levelManager.update();			
 			player.update();
 			enemyManager.update(levelManager.getCurrentLevel().getLevelData(), player);
@@ -239,8 +246,15 @@ public class Playing extends State implements StateMethods{
 			case SHIFT_KEY: 	player.setRunning(true); break;
 			case ESC_KEY: 		
 				paused = !paused;
-				
-				
+				if (paused) {
+                    playingMusic.stop();
+                    menuMusic.loop();
+                    inMenu = true;
+                } else {
+                    menuMusic.stop();
+                    playingMusic.loop();
+                    inMenu = false;
+                }
 				break;
 			}			
 		}
