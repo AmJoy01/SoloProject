@@ -88,7 +88,7 @@ This is where I write down the controls of the game
 | | | |
 |:-------------------------:|:-------------------------:|:-------------------------:|
 |<img width="300" alt="walking left" src="https://github.com/AmJoy01/SoloProject/assets/93353341/8e45b173-ffa6-4887-a60b-9c85f001458e"> Left arrow/A key |<img width="300" height="200" alt="walking right" src="https://github.com/AmJoy01/SoloProject/assets/93353341/a5e0f120-9549-4af6-82d1-73087fc94c07"> Right arrow/D key |<img width="300" alt="running" src="https://github.com/AmJoy01/SoloProject/assets/93353341/9fd5241a-d03e-4e57-b622-4d2d0d8d110a"> SHIFT then (left and right)|
-|<img width="300" height="400" alt="jumping sprite" src="https://github.com/AmJoy01/SoloProject/assets/93353341/e8a2778d-64a5-4b04-8e3d-397f296d362a"> Spacebar |<img width="300" alt="attacking sprite" src="https://github.com/AmJoy01/SoloProject/assets/93353341/3c6ba930-8a23-4a5b-b071-7431f99d20e8"> Left mouse-click |
+|<img width="150" height="300" alt="jumping sprite" src="https://github.com/AmJoy01/SoloProject/assets/93353341/e8a2778d-64a5-4b04-8e3d-397f296d362a"> <p>Spacebar</p> |<img width="300" alt="attacking sprite" src="https://github.com/AmJoy01/SoloProject/assets/93353341/3c6ba930-8a23-4a5b-b071-7431f99d20e8"> Left mouse-click |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
